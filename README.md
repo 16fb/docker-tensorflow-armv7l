@@ -83,3 +83,7 @@ Run as shell, mount mounts, allow writes so can install, Ensure you are root.
 ## Credits to these great ppl for guides
 [fgervais](https://github.com/fgervais/docker-tensorflow) who did something similar. \
 this [blog](https://www.padok.fr/en/blog/multi-architectures-docker-iot) that guides using buildx. 
+
+### commands
+docker buildx build --platform linux/amd64,linux/arm/v7 -t 16fb/tf2.3:v1.2 . --push
+sudo singularity build --sandbox tf2.3_sb_v1.2 docker://16fb/tf2.3:v1.2

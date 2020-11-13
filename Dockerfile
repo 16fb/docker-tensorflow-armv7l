@@ -43,15 +43,29 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
 	 libffi-dev
 RUN pip3 install -U --user pyOpenSSL
 
-# squashfs-tools is used by linux system to transform docker to singularity.
-#RUN pip3 install -U --user squashfs-tools
+RUN pip3 install -U --user six
 
+### Need set or failure validate cert.
+ENV SSL_CERT_DIR=/etc/ssl/certs
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+
+# install finish V1.1
 RUN pip3 install *.whl
 
 RUN wget https://github.com/lhelontra/tensorflow-on-arm/releases/download/v2.3.0/tensorflow-2.3.0-cp37-none-linux_armv7l.whl
 
+RUN pip3 install tensorflow-*.whl
 
-### List Modules
+# V1.3 Enable Jupyter Notebook 
+RUN pip3 install -U -q --user keras
+RUN pip3 install -U -q --user matplotlib
+RUN pip3 install -U -q --user jupyter
+
+### add jupyter to PATH
+ENV PATH="\${PATH}:\$(python3 -c 'import site; print(site.USER_BASE)')/bin"
+
+
+# Logging
 ## pip 20.2.4
 RUN pip3 --version && sleep 7s 
 ## 3.7.3 [python itself no works]
@@ -60,5 +74,5 @@ RUN python3 --version && sleep 7s
 ##RUN cat /usr/local/bin/_manylinux.py && sleep 7s
 RUN pip3 list  && sleep 12s
 
-RUN pip3 install tensorflow-*.whl
+# Cleanup
 RUN rm *.whl
