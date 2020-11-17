@@ -36,14 +36,13 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
 	libssl-dev
 
 RUN	pip3 install -U pip
-RUN pip3 install -U -q --user matplotlib
+RUN pip3 install -U matplotlib
 
 RUN apt-get update && apt-get -y install --no-install-recommends \
 	 libffi6 \
 	 libffi-dev
-RUN pip3 install -U --user pyOpenSSL
-
-RUN pip3 install -U --user six
+RUN pip3 install -U pyOpenSSL
+RUN pip3 install -U six
 
 ### Need set or failure validate cert.
 ENV SSL_CERT_DIR=/etc/ssl/certs
@@ -57,12 +56,17 @@ RUN wget https://github.com/lhelontra/tensorflow-on-arm/releases/download/v2.3.0
 RUN pip3 install tensorflow-*.whl
 
 # V1.3 Enable Jupyter Notebook 
-RUN pip3 install -U -q --user keras
-RUN pip3 install -U -q --user matplotlib
-RUN pip3 install -U -q --user jupyter
+RUN pip3 install -U -q keras
+RUN pip3 install -U -q matplotlib
+RUN pip3 install -U -q jupyter
+RUN pip3 install -U -q six
 
 ### add jupyter to PATH
-ENV PATH="\${PATH}:\$(python3 -c 'import site; print(site.USER_BASE)')/bin"
+### /home/pi/.local
+ENV PATH="${PATH}:/home/pi/.local/bin"
+### v1.3.1 might need to add ## might actually be root/.local/bin
+ENV PATH="${PATH}:root/.local/bin" 
+ENV PATH="${PATH}:~/.local/bin" 
 
 
 # Logging

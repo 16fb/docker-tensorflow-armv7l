@@ -6,6 +6,7 @@ Versions
 * v1.0 -> base variant
 * v1.1 -> added packages to download modules.
 * v1.2 -> more packages to download modules, HTTPS functionality.
+* v1.3 -> jupyter fully functional.
 
 ## Cross compiling using buildx to generate armv7l tensorflow2.3 docker images
 
@@ -33,7 +34,7 @@ Run the following commands to setup envrionment to cross compile docker containe
 
 ### [Building, is the same, just with --platform]
 * `docker buildx build --platform <Target_Platforms> -t <tag> . --push`
-* `docker buildx build --platform linux/amd64,linux/arm/v7 -t 16fb/tf2.3:v1.1 . --push`
+* `docker buildx build --platform linux/amd64,linux/arm/v7 -t 16fb/tf2.3:v1.3 . --push`
 \
 \<tag\> = \<namespace\>/\<name\>:\<version\> \
 In this case its named `tf2.3` in my personal `16fb` namespace for `version 1.1` \
