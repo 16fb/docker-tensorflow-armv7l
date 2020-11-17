@@ -3,7 +3,6 @@
 # debian:buster
 FROM debian@sha256:9b61eaedd46400386ecad01e2633e4b62d2ddbab8a95e460f4e0057c612ad085 AS base
 
-
 FROM base as build
 RUN apt-get update && apt-get -y install --no-install-recommends \
 	gcc \
@@ -33,16 +32,12 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
 	build-essential \
 	python-certifi \
 	ca-certificates \
-	libssl-dev
+	libssl-dev \
+	libffi6 \
+	libffi-dev
 
 RUN	pip3 install -U pip
-RUN pip3 install -U matplotlib
-
-RUN apt-get update && apt-get -y install --no-install-recommends \
-	 libffi6 \
-	 libffi-dev
-RUN pip3 install -U pyOpenSSL
-RUN pip3 install -U six
+RUN pip3 install -U matplotlib pyOpenSSL six
 
 ### Need set or failure validate cert.
 ENV SSL_CERT_DIR=/etc/ssl/certs
@@ -50,24 +45,17 @@ ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
 # install finish V1.1
 RUN pip3 install *.whl
-
 RUN wget https://github.com/lhelontra/tensorflow-on-arm/releases/download/v2.3.0/tensorflow-2.3.0-cp37-none-linux_armv7l.whl
-
 RUN pip3 install tensorflow-*.whl
 
 # V1.3 Enable Jupyter Notebook 
-RUN pip3 install -U -q keras
-RUN pip3 install -U -q matplotlib
-RUN pip3 install -U -q jupyter
-RUN pip3 install -U -q six
+RUN pip3 install -U -q keras matplotlib jupyter six
 
-### add jupyter to PATH
+## Add jupyter to PATH
 ### /home/pi/.local
 ENV PATH="${PATH}:/home/pi/.local/bin"
-### v1.3.1 might need to add ## might actually be root/.local/bin
 ENV PATH="${PATH}:root/.local/bin" 
 ENV PATH="${PATH}:~/.local/bin" 
-
 
 # Logging
 ## pip 20.2.4
