@@ -34,7 +34,7 @@ Run the following commands to setup envrionment to cross compile docker containe
 
 ### [Building, is the same, just with --platform]
 * `docker buildx build --platform <Target_Platforms> -t <tag> . --push`
-* `docker buildx build --platform linux/amd64,linux/arm/v7 -t 16fb/tf2.3:v1.3 . --push`
+* `docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64 -t 16fb/tf2.3:v1.3 . --push`
 \
 \<tag\> = \<namespace\>/\<name\>:\<version\> \
 In this case its named `tf2.3` in my personal `16fb` namespace for `version 1.1` \
