@@ -58,7 +58,9 @@ ENV PATH="${PATH}:root/.local/bin"
 ENV PATH="${PATH}:~/.local/bin" 
 
 # V1.4 Enable pandas
+RUN pip3 install -U -q cython 
 RUN pip3 install -U -q pandas
+RUN pip3 install -U -q scikit-learn
 
 # Logging
 ## pip 20.2.4

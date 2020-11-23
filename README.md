@@ -81,10 +81,18 @@ OR Convert SIF to Sandbox, be in same directory as SIF file (doesnt seem to work
 Run as shell, mount mounts, allow writes so can install, Ensure you are root.
 * `singularity shell --bind /mnt:/mnt --writable tf2.3_sb /bin/bash`
 
+## Export to tar file.
+Save to tar file
+* `docker save --output tf2.3_v1.4 16fb/tf2.3:v1.4`
+
+Load from tar file
+* `docker load --input tf2.3_v1.3`
+
 ## Credits to these great ppl for guides
 [fgervais](https://github.com/fgervais/docker-tensorflow) who did something similar. \
 this [blog](https://www.padok.fr/en/blog/multi-architectures-docker-iot) that guides using buildx. 
 
 ### commands
+docker buildx build --platform linux/arm/v7 -t 16fb/tf2.3:v1.4 . --push
 docker buildx build --platform linux/amd64,linux/arm/v7 -t 16fb/tf2.3:v1.2 . --push
 sudo singularity build --sandbox tf2.3_sb_v1.2 docker://16fb/tf2.3:v1.2
