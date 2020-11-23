@@ -68,6 +68,28 @@ List of common platforms:
 * `import tensorflow as tf`
 * `print(tf.___version__)`
 
+## Run docker Jupyter notebook
+Runs Jupyter notebook server, exposing port 8899 on host machine, password auth is dependant on hash. 
+[How to compute Hash](https://jupyter-notebook.readthedocs.io/en/stable/public_server.html#preparing-a-hashed-password)
+```
+
+export image="16fb/tf2.3:v1.4"
+export Hash='<Hash here>'
+export NOTEBOOKPORT=8899
+
+docker run --env NOTEBOOKPORT=${NOTEBOOKPORT} --env Hash=${Hash} -p ${NOTEBOOKPORT}:${NOTEBOOKPORT}/tcp --rm -v $PWD:/data -w /data -u 0 --name JupyterNotebook -i $image /bin/bash << EOF	
+export PATH=$PATH:~/.local/bin
+
+echo Running Jupyter Notebook Server:
+jupyter notebook --NotebookApp.password='$Hash' --no-browser --port=$NOTEBOOKPORT --ip=0.0.0.0 --allow-root
+
+EOF
+
+```
+### Making changes in running container
+Opens bash shell on container
+`docker exec -it JupyterNotebook  /bin/bash`
+
 ## Run using Singularity 
 File size can be quite big.
 
