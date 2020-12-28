@@ -1,5 +1,5 @@
 # docker-tensorflow-armv7l
-Guide to build + run 
+Guide to build + run container with tensorflow for ARMv7l 
 
 ## DockerHub Images
 Repo with tf2.3 on debian buster [Link to Docker Hub](https://hub.docker.com/repository/docker/16fb/tf2.3) \
